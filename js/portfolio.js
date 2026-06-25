@@ -166,3 +166,34 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('[Init] contact-form not found');
     }
 });
+
+/* -- LIVE -- */
+const scrollArrow = document.getElementById('scroll-arrow');
+
+function updateArrow() {
+    const scrollY = window.scrollY;
+
+    if (scrollY < 100) {
+        scrollArrow.textContent = '↓';
+        scrollArrow.dataset.state = 'down';
+    } else {
+        scrollArrow.textContent = '↑';
+        scrollArrow.dataset.state = 'up';
+    }
+}
+
+scrollArrow.addEventListener('click', () => {
+    if (scrollArrow.dataset.state === 'down') {
+        document.querySelector('#about').scrollIntoView({
+            behavior: 'smooth'
+        });
+    } else {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
+});
+
+window.addEventListener('scroll', updateArrow);
+updateArrow();

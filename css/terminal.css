@@ -129,6 +129,33 @@ h2 {
     flex-wrap: wrap;
 }
 
+/* -- ARROW -- */
+.scroll-arrow {
+    position: fixed;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+
+    font-size: 22px;
+    width: 45px;
+    height: 45px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(6px);
+}
+
+.scroll-arrow:hover {
+    border-color: white;
+    transform: translateX(-50%) scale(1.1);
+}
+
 /* -- CURSOR -- */
 .cursor {
     display: inline-block;
