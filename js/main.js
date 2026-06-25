@@ -46,6 +46,11 @@ async function fetchJson(url) {
 async function fetchProjects() {
     const grid = document.getElementById('projects-grid');
 
+    if (!grid) {
+        console.error('[Projects] #projects-grid not found in DOM');
+        return;
+    }
+
     console.log('[Projects] Initializing fetchProjects()');
 
     try {
@@ -56,10 +61,22 @@ async function fetchProjects() {
         console.log(`[Projects] User: ${userUrl}`);
         console.log(`[Projects] Org: ${orgUrl}`);
 
-        const [userRepos, orgRepos] = await Promise.all([
+        // ✅ FIX: resilient fetching (no full crash if one fails)
+        const [userResult, orgResult] = await Promise.allSettled([
             fetchJson(userUrl),
             fetchJson(orgUrl)
         ]);
+
+        const userRepos = userResult.status === 'fulfilled' ? userResult.value : [];
+        const orgRepos = orgResult.status === 'fulfilled' ? orgResult.value : [];
+
+        if (userResult.status === 'rejected') {
+            console.warn('[Projects] Failed to fetch user repos:', userResult.reason);
+        }
+
+        if (orgResult.status === 'rejected') {
+            console.warn('[Projects] Failed to fetch org repos:', orgResult.reason);
+        }
 
         console.log('[Projects] Raw user repos:', userRepos);
         console.log('[Projects] Raw org repos:', orgRepos);
@@ -67,7 +84,8 @@ async function fetchProjects() {
         const allReposMap = new Map();
 
         [...userRepos, ...orgRepos].forEach(repo => {
-            const key = `${repo.owner.login}/${repo.name}`;
+            const owner = repo.owner?.login || 'unknown';
+            const key = `${owner}/${repo.name}`;
 
             if (allReposMap.has(key)) {
                 console.warn(`[Projects] Duplicate repo detected: ${key}`);
@@ -103,15 +121,21 @@ async function fetchProjects() {
         grid.innerHTML = filtered.map(repo => {
             console.log(`[Projects] Rendering repo: ${repo.name}`);
 
+            const safeName = repo.name ?? 'unknown';
+            const safeDesc = repo.description ?? 'no description provided.';
+            const safeLang = repo.language ?? 'unknown';
+            const safeStars = repo.stargazers_count ?? 0;
+            const safeUrl = repo.html_url ?? '#';
+
             return `
                 <div class="project-card">
-                    <h3>${repo.name}</h3>
-                    <p>${repo.description || 'no description provided.'}</p>
+                    <h3>${safeName}</h3>
+                    <p>${safeDesc}</p>
                     <div class="meta">
-                        <span class="lang">${repo.language || 'unknown'}</span>
-                        <span>★ ${repo.stargazers_count}</span>
+                        <span class="lang">${safeLang}</span>
+                        <span>★ ${safeStars}</span>
                     </div>
-                    <a href="${repo.html_url}" target="_blank">view on github →</a>
+                    <a href="${safeUrl}" target="_blank">view on github →</a>
                 </div>
             `;
         }).join('');
@@ -124,3 +148,16 @@ async function fetchProjects() {
         grid.innerHTML = '<p class="output">could not fetch repositories.</p>';
     }
 }
+
+/* -- INIT -- */
+
+document.addEventListener('DOMContentLoaded', () => {
+    fetchProjects();
+
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', handleContact);
+    } else {
+        console.warn('[Init] contact-form not found');
+    }
+});
