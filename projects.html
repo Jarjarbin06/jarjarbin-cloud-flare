@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Nathan Jarjarbin - Projects</title>
+    <link href="css/terminal.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<a href="index.html" class="back-button">← home</a>
+<section id="hero">
+    <div class="terminal-window">
+        <div class="terminal-bar">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="terminal-title">jarjarbin@projects: ~</span>
+        </div>
+        <div class="terminal-body">
+            <p><span class="prompt">$</span> whoami</p>
+            <p class="output">Jarjarbin — Projects overview</p>
+            <p><span class="prompt">$</span> <span class="cursor">█</span></p>
+        </div>
+    </div>
+</section>
+<button id="scroll-arrow" class="scroll-arrow">↓</button>
+<section id="projects">
+    <h2><span class="prompt">#</span> projects</h2>
+    <div id="projects-grid">
+        <p class="output">fetching repositories...</p>
+    </div>
+</section>
+<footer>
+    <p>built by Nathan Jarjarbin — <a href="https://github.com/Jarjarbin06/jarjarbin-cloud-flare" target="_blank">source</a></p>
+</footer>
+<script src="js/github-api.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/arrow.js"></script>
+</body>
+</html>

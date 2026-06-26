@@ -1,47 +1,3 @@
-/* -- PROJECTS - GitHub API -- */
-
-const GITHUB_USERNAME = 'Jarjarbin06';
-const GITHUB_ORG_NAME = 'Jarjarbin-Studio';
-const EXCLUDED_REPOS = [
-    'Jarjarbin06',
-    'jarjarbin-cloud-flare',
-    'Stumper04',
-    'WS_GoodPractices',
-    'sans-ta_bs103cypher',
-    'sans-ta_bsmy-hunter',
-    'BSCP',
-    'CLI-Game-Engine',
-    'map_tool',
-    'epitech_console'
-];
-
-async function fetchJson(url) {
-    console.log(`[GitHub] Fetching: ${url}`);
-
-    try {
-        const res = await fetch(url);
-
-        console.log(`[GitHub] Response status: ${res.status} ${res.statusText}`);
-
-        if (!res.ok) {
-            const errorText = await res.text();
-            console.error(`[GitHub] API error body for ${url}:`, errorText);
-            throw new Error(`GitHub API error (${res.status}) on ${url}`);
-        }
-
-        const data = await res.json();
-
-        console.log(`[GitHub] Success: ${url}`);
-        console.log(`[GitHub] Items received:`, Array.isArray(data) ? data.length : 'not array');
-
-        return data;
-
-    } catch (err) {
-        console.error(`[GitHub] Fetch failed for ${url}`, err);
-        throw err;
-    }
-}
-
 async function fetchProjects() {
     const grid = document.getElementById('projects-grid');
 
@@ -155,7 +111,6 @@ async function fetchProjects() {
     }
 }
 
-/* -- INIT -- */
 document.addEventListener('DOMContentLoaded', () => {
     fetchProjects();
 
@@ -166,34 +121,3 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn('[Init] contact-form not found');
     }
 });
-
-/* -- LIVE -- */
-const scrollArrow = document.getElementById('scroll-arrow');
-
-function updateArrow() {
-    const scrollY = window.scrollY;
-
-    if (scrollY < 100) {
-        scrollArrow.textContent = '↓';
-        scrollArrow.dataset.state = 'down';
-    } else {
-        scrollArrow.textContent = '↑';
-        scrollArrow.dataset.state = 'up';
-    }
-}
-
-scrollArrow.addEventListener('click', () => {
-    if (scrollArrow.dataset.state === 'down') {
-        document.querySelector('#about').scrollIntoView({
-            behavior: 'smooth'
-        });
-    } else {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    }
-});
-
-window.addEventListener('scroll', updateArrow);
-updateArrow();

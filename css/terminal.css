@@ -129,6 +129,121 @@ h2 {
     flex-wrap: wrap;
 }
 
+/* -- EXPENDABLE -- */
+.expendable-title {
+    padding: 10px 14px;
+    cursor: pointer;
+    color: var(--blue);
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+.expendable-title:hover {
+    color: var(--green);
+}
+
+.expendables {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.expendable-item {
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    background: var(--bg-light);
+    overflow: hidden;
+}
+
+.expendable-content {
+    display: none;
+    padding: 12px 14px;
+    font-size: 0.85rem;
+    color: var(--muted);
+    border-top: 1px solid var(--border);
+}
+
+.expendable-item.open .expendable-content {
+    display: block;
+}
+
+.expendable-item.open .expendable-title {
+    color: var(--green);
+}
+
+/* -- PROJECTS -- */
+.project-badges {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+}
+
+.badge {
+    height: 18px;
+    display: inline-block;
+    border: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0;
+    filter: none;
+    image-rendering: auto;
+    opacity: 0.95;
+}
+
+.badge-line {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 1px;
+    flex-wrap: wrap;
+}
+
+/* -- BACK BUTTON -- */
+.back-button {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+
+    display: inline-flex;
+    align-items: center;
+
+    padding: 8px 14px;
+
+    color: var(--green);
+    text-decoration: none;
+
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.9rem;
+
+    border: 1px solid var(--green);
+    border-radius: 6px;
+
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(6px);
+
+    transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.back-button:hover {
+    background: var(--green);
+    color: #000;
+    transform: translateX(-3px);
+}
+
+.back-button:active {
+    transform: translateX(-1px);
+}
+
+.back-button::before {
+    content: "$ cd ..";
+    margin-right: 10px;
+    opacity: 0.75;
+}
+
 /* -- ARROW -- */
 .scroll-arrow {
     position: fixed;
