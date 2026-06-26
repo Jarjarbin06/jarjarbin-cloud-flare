@@ -88,12 +88,12 @@ async function fetchProjects() {
         <div class="project-card">
             <h3>${displayName}</h3>
 
-            <p>${safeDesc}</p>
-
             <div class="meta">
                 <span class="lang">${safeLang}</span>
                 <span>★ ${safeStars}</span>
             </div>
+
+            <p>${safeDesc}</p>
 
             <a href="${safeUrl}" target="_blank">
                 view on github →

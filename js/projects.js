@@ -144,13 +144,13 @@ async function fetchProjects() {
                 <div class="project-card">
                     <h3>${displayName}</h3>
 
-                    ${description ? `<p class="project-description">${description}</p>` : ""}
-
                     <div class="meta">
                         <span class="lang">${repo.language || "unknown"}</span>
                         <span>★ ${repo.stargazers_count ?? 0}</span>
                         <span class="version">${repo.meta.version || ""}</span>
                     </div>
+
+                    ${description ? `<p class="project-description">${description}</p>` : ""}
 
                     <div class="project-status">
                         ${renderStatus(repo.meta.status)}
